@@ -1,0 +1,30 @@
+{
+  "id": "schedule-manager",
+  "kind": "tool",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "dataDir": {
+        "type": "string",
+        "description": "Directory to store schedule data (daily/, weekly/, calendar.md)"
+      },
+      "timezone": {
+        "type": "string",
+        "description": "Default IANA timezone (e.g. Asia/Shanghai)"
+      },
+      "defaultReminderMinutes": {
+        "type": "number",
+        "description": "Default reminder lead time in minutes"
+      },
+      "injectTodaySchedule": {
+        "type": "boolean",
+        "description": "Inject today's schedule into agent context on each conversation"
+      },
+      "historyDays": {
+        "type": "number",
+        "description": "Number of recent daily files to read for daily_plan context"
+      }
+    }
+  }
+}

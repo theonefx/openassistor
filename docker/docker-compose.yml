@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  openassistor-base:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.base
+    image: openassistor/openclaw-base:latest
+    # 基础镜像服务，通常不需要运行，只用于构建
+
+  openassistor:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: openassistor:latest
+    container_name: openassistor
+    restart: unless-stopped
+    depends_on:
+      - openassistor-base
+    environment:
+      # 从 .env 文件加载环境变量
+      # 请先复制 .env.example 为 .env 并填写您的 API 密钥
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+    volumes:
+      # 持久化数据目录
+      - ./data:/home/node/.openassistor/schedule
+      # 如果您有自定义的 .env 文件，可以挂载它
+      # - ./.env:/home/node/.openclaw/.env:ro
+    ports:
+      # 如果使用 gateway 功能，暴露端口
+      - "8080:8080"
+    # 如果需要在后台运行而不立即退出
+    stdin_open: true
+    tty: true

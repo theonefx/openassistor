@@ -1,0 +1,14 @@
+{
+  "name": "@openassistor/schedule-manager",
+  "version": "0.1.0",
+  "description": "Schedule management plugin with deterministic time handling and conflict detection",
+  "type": "module",
+  "dependencies": {
+    "@sinclair/typebox": "0.34.49"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

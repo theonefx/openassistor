@@ -1,0 +1,25 @@
+# OpenClaw 基础镜像
+# 包含 OpenClaw CLI 和运行时依赖
+
+FROM node:20-alpine
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装 OpenClaw CLI 全局
+RUN npm install -g openclaw@latest
+
+# 创建 OpenClaw 配置目录结构
+RUN mkdir -p /root/.openclaw/extensions
+
+# 设置权限
+RUN chown -R node:node /root/.openclaw
+
+# 切换到 node 用户以提高安全性
+USER node
+
+# 基础镜像包含对主流模型提供商的支持：
+# - Anthropic (Claude)
+# - OpenAI (GPT)  
+# - Qwen (通义千问)
+# 环境变量会在运行时自动加载
